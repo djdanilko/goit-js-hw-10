@@ -4,22 +4,17 @@ import flatpickr from 'flatpickr';
 // Додатковий імпорт стилів
 import 'flatpickr/dist/flatpickr.min.css';
 
-// const options = {
-//   enableTime: true,
-//   time_24hr: true,
-//   defaultDate: new Date(),
-//   minuteIncrement: 1,
-//   onClose(selectedDates) {
-//     console.log(selectedDates[0]);
-//   },
-// };
+// Описаний у документації
+import iziToast from 'izitoast';
+// Додатковий імпорт стилів
+import 'izitoast/dist/css/iziToast.min.css';
 
 let userSelectedDate = 0;
 
 const btn = document.querySelector('button');
 btn.disabled = true;
 
-const inpt = document.querySelector('input');
+const input = document.querySelector('#datetime-picker');
 
 flatpickr('#datetime-picker', {
   enableTime: true,
@@ -33,7 +28,13 @@ flatpickr('#datetime-picker', {
       console.log(userSelectedDate);
     } else {
       btn.disabled = true;
-      window.alert('Please choose a date in the future');
+
+      iziToast.show({
+        message: 'Please choose a date in the future',
+        messageColor: 'white',
+        backgroundColor: 'red',
+        position: 'topRight',
+      });
     }
     console.log(selectedDates[0]);
   },
@@ -68,6 +69,8 @@ function addLeadingZero(value) {
 }
 
 btn.addEventListener('click', () => {
+  btn.disabled = true;
+  input.disabled = true;
   const interval = setInterval(() => {
     const ms = userSelectedDate - Date.now();
 
@@ -80,11 +83,16 @@ btn.addEventListener('click', () => {
 
     if (ms <= 0) {
       clearInterval(interval);
+
+      daysEl.textContent = '00';
+      hoursEl.textContent = '00';
+      minutesEl.textContent = '00';
+      secondsEl.textContent = '00';
+
+      input.disabled = false;
       return;
     }
 
-    btn.disabled = true;
-    inpt.disabled = true;
     return time;
   }, 1000);
 });
