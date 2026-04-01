@@ -1,2 +1,0 @@
-import{i as t}from"./vendor-BbbuE1sJ.js";const s=document.querySelector(".form");s.addEventListener("submit",i=>{i.preventDefault();const o=Number(s.elements.delay.value),r=s.elements.state.value;new Promise((e,m)=>{setTimeout(()=>{r==="fulfilled"?e(o):m(o)},o)}).then(e=>{t.show({message:`✅ Fulfilled promise in ${e}ms`,messageColor:"white",backgroundColor:"green",position:"topRight"})}).catch(e=>{t.show({message:`❌ Rejected promise in ${e}ms`,messageColor:"white",backgroundColor:"red",position:"topRight"})})});
-//# sourceMappingURL=2-snackbar-8ZgFAYb4.js.map
